@@ -1,0 +1,40 @@
+
+from pathlib import Path
+import shutil
+
+# Map common file extensions to folder names.
+categories = {
+    "Images": [".jpg", ".jpeg", ".png", ".gif"],
+    "Documents": [".pdf", ".docx", ".txt", ".doc"],
+    "Spreadsheets": [".csv", ".xlsx", ".xls"],
+    "Videos": [".mp4", ".mov", ".mkv"],
+    "Archives": [".zip", ".rar", ".7z"]
+}
+
+folder = Path(input("Enter folder path: ")).expanduser()
+apply_changes = input("Move files now? (yes/no): ").lower() == "yes"
+
+if not folder.is_dir():
+    print("Folder does not exist.")
+else:
+    for file in folder.iterdir():
+        if not file.is_file():
+            continue
+
+        # Choose a folder based on the file extension.
+        destination_folder = "Other"
+        for category, extensions in categories.items():
+            if file.suffix.lower() in extensions:
+                destination_folder = category
+                break
+
+        destination = folder / destination_folder / file.name
+
+        if not apply_changes:
+            print(f"Preview: {file.name} -> {destination_folder}")
+        elif destination.exists():
+            print(f"Skipped existing file: {file.name}")
+        else:
+            destination.parent.mkdir(exist_ok=True)
+            shutil.move(str(file), str(destination))
+            print(f"Moved: {file.name} -> {destination_folder}")
