@@ -1,0 +1,22 @@
+
+import socket
+
+# Test a TCP port on a system you are authorized to check.
+host = input("Enter hostname or IP address: ").strip()
+
+try:
+    port = int(input("Enter TCP port (example 443): "))
+
+    if not 1 <= port <= 65535:
+        raise ValueError
+
+    # Try connecting for up to three seconds.
+    with socket.create_connection((host, port), timeout=3):
+        print(f"Port {port} is OPEN on {host}.")
+
+except ValueError:
+    print("Enter a valid port between 1 and 65535.")
+except socket.timeout:
+    print("Connection timed out.")
+except OSError as error:
+    print("Connection failed:", error)
