@@ -1,0 +1,39 @@
+
+import ipaddress
+import platform
+import subprocess
+
+# Check whether an IP address responds to one ping.
+def ping_host(ip):
+    system = platform.system().lower()
+
+    if system == "windows":
+        command = ["ping", "-n", "1", "-w", "1000", str(ip)]
+    else:
+        command = ["ping", "-c", "1", "-W", "1", str(ip)]
+
+    try:
+        result = subprocess.run(
+            command,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=3
+        )
+        return result.returncode == 0
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+
+try:
+    subnet = input("Enter a small IPv4 subnet (e.g. 192.168.1.0/28): ")
+    network = ipaddress.ip_network(subnet, strict=False)
+
+    if network.version != 4 or network.num_addresses > 256:
+        raise ValueError
+
+    # Test the usable addresses on this authorized network.
+    for ip in network.hosts():
+        if ping_host(ip):
+            print(f"Host responding: {ip}")
+
+except ValueError:
+    print("Enter a valid IPv4 subnet with 256 addresses or fewer.")
