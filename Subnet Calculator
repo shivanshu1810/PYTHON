@@ -1,0 +1,26 @@
+
+import ipaddress
+
+# Ask for an IP address and subnet prefix.
+ip_input = input("Enter IP/CIDR (example 192.168.1.10/24): ")
+
+try:
+    interface = ipaddress.ip_interface(ip_input)
+    network = interface.network
+
+    print("\n--- Subnet Information ---")
+    print("IP Address:", interface.ip)
+    print("Network Address:", network.network_address)
+    print("Subnet Mask:", network.netmask)
+    print("Broadcast Address:", network.broadcast_address)
+    print("Total Addresses:", network.num_addresses)
+
+    # Display the normal usable IPv4 host range.
+    if network.version == 4 and network.prefixlen <= 30:
+        print("First Usable IP:", network.network_address + 1)
+        print("Last Usable IP:", network.broadcast_address - 1)
+    elif network.version == 4:
+        print("Usable Host Range: Special small subnet")
+
+except ValueError:
+    print("Invalid input. Example: 192.168.1.10/24")
