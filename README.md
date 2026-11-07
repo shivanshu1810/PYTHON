@@ -1,16 +1,14 @@
-# Python IT Support & Networking Projects
+# My Python Projects
 
-Five beginner friendly Python utilities built to practise IT support and networking skills.
+Small Python projects I made to practice. Python is not my main skill, I use it for learning and for small tools.
 
 ## Projects
-1. **Subnet Calculator** (`subnet_calculator.py`) — Calculates IP addresses, subnet masks, and network ranges.
-2. **Password Generator** (`password_generator.py`) — Generates secure random passwords.
-3. **TCP Port Checker** (`port_checker.py`) — Tests TCP port connectivity.
-4. **File Organizer** (`file_organizer.py`) — Sorts files into folders by file type.
-5. **Ping Sweep** (`ping_sweep.py`) — Checks a small network for responding devices.
 
-## Technologies
-Python 3, IPv4, TCP/IP, networking, troubleshooting, and automation.
+- Subnet Calculator - works out network and host addresses from an IP address and mask
+- Password Generator - makes random passwords
+- TCP Port Checker - checks if a port is open on a computer
+- File Organizer - sorts files into folders by file type
+- Ping Sweep - pings a small range of IPs to see what is online
+- ticket_tracker.py - a very small ticket list program
 
-## Requirements
-Python 3 installed. No third-party packages required.
+You only need Python 3. No extra packages.
